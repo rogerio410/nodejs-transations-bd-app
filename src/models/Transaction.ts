@@ -27,6 +27,7 @@ class Transaction extends AuditBaseModel {
   })
   category: Category;
 
+  // unnecessary field only for rockeatseat test pass
   @Column()
   category_id: string
 
