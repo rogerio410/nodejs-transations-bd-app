@@ -1,36 +1,37 @@
-import { Column, Entity, Generated, JoinColumn, ManyToOne } from "typeorm";
-import AuditBaseModel from "./AuditBaseModel";
-import Category from "./Category";
+import { Column, Entity, Generated, ManyToOne } from 'typeorm'
+import AuditBaseModel from './AuditBaseModel'
+import Category from './Category'
 
 @Entity({
-  name: 'transactions'
+  name: 'transactions',
 })
 class Transaction extends AuditBaseModel {
   @Column({
     primary: true,
-    type: 'uuid'
+    type: 'uuid',
   })
   @Generated('uuid')
-  id: string;
+  id: string
 
   @Column()
-  title: string;
+  title: string
 
   @Column('varchar')
-  type: 'income' | 'outcome';
+  type: 'income' | 'outcome'
 
   @Column()
-  value: number;
+  value: number
 
   @ManyToOne(() => Category, category => category.transactions, {
-    onDelete: 'SET NULL', onUpdate: 'SET NULL'
+    onDelete: 'SET NULL',
+    onUpdate: 'SET NULL',
+    eager: true,
   })
-  category: Category;
+  category: Category
 
   // unnecessary field only for rockeatseat test pass
   @Column()
   category_id: string
-
 }
 
-export default Transaction;
+export default Transaction

@@ -1,10 +1,10 @@
 // import AppError from '../errors/AppError';
 
-import { getCustomRepository, getRepository } from 'typeorm';
-import AppError from '../errors/AppError';
-import Category from '../models/Category';
-import Transaction from '../models/Transaction';
-import TransactionsRepository from '../repositories/TransactionsRepository';
+import { getCustomRepository, getRepository } from 'typeorm'
+import AppError from '../errors/AppError'
+import Category from '../models/Category'
+import Transaction from '../models/Transaction'
+import TransactionsRepository from '../repositories/TransactionsRepository'
 
 interface Request {
   title: string
@@ -14,7 +14,12 @@ interface Request {
 }
 
 class CreateTransactionService {
-  public async execute({ title, value, type, category }: Request): Promise<Transaction> {
+  public async execute({
+    title,
+    value,
+    type,
+    category,
+  }: Request): Promise<Transaction> {
     const categoriesRepo = getRepository(Category)
 
     let categoryFound: Category
@@ -32,7 +37,13 @@ class CreateTransactionService {
       throw new AppError('Insufficient Balance', 400)
     }
 
-    const transaction = transactionsRepo.create({ title, type, value, category: categoryFound, category_id: categoryFound.id })
+    const transaction = transactionsRepo.create({
+      title,
+      type,
+      value,
+      category: categoryFound,
+      category_id: categoryFound.id,
+    })
 
     await transactionsRepo.save(transaction)
 
@@ -40,4 +51,4 @@ class CreateTransactionService {
   }
 }
 
-export default CreateTransactionService;
+export default CreateTransactionService
